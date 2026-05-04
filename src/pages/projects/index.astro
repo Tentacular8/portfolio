@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { projects } from '../../data/projects';
+import { getPublishedProjects } from '../../utils/projects';
+
+const projects = await getPublishedProjects();
 ---
 
 <Layout
@@ -19,20 +21,20 @@ import { projects } from '../../data/projects';
       {projects.map((p) => (
         <li>
           <a
-            href={`/projects/${p.slug}`}
+            href={`/projects/${p.data.slug}`}
             class="group block h-full rounded-md border border-subtle p-5 hover:border-accent focus-ring"
           >
-            {p.featured && (
-              <span class="font-mono text-xs text-accent mb-3 block">featured</span>
+            {p.data.featured && (
+              <span class="font-mono text-xs text-accent mb-2 block">featured</span>
             )}
             <h2 class="text-base font-semibold tracking-tight group-hover:text-accent">
-              {p.title}
+              {p.data.title}
             </h2>
             <p class="mt-1.5 text-sm text-secondary leading-relaxed line-clamp-2">
-              {p.summary}
+              {p.data.summary}
             </p>
             <ul class="mt-4 flex flex-wrap gap-1.5" role="list">
-              {p.techStack.slice(0, 3).map((t) => (
+              {p.data.techStack.slice(0, 3).map((t) => (
                 <li>
                   <span class="font-mono text-xs text-muted border border-subtle rounded px-1.5 py-0.5">
                     {t}
