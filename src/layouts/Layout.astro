@@ -4,13 +4,21 @@ import '@fontsource/ibm-plex-sans/500.css';
 import '@fontsource/ibm-plex-sans/600.css';
 import '@fontsource/jetbrains-mono/400.css';
 import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = 'Cybersecurity engineer portfolio.' } = Astro.props;
+const {
+  title,
+  description = 'Portfolio of [YOUR NAME], network and cybersecurity engineer.',
+} = Astro.props;
+
+const siteUrl = '[YOUR SITE URL]'; // e.g. https://username.github.io/portfolio
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
 ---
 
 <!doctype html>
@@ -20,15 +28,25 @@ const { title, description = 'Cybersecurity engineer portfolio.' } = Astro.props
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL} />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
 
+    <title>{title}</title>
+
     <!--
-      FOUC guard: runs synchronously before first paint.
-      Applies .dark to <html> unless localStorage says 'light'
-      or the system explicitly prefers light with no stored preference.
-      Default is dark.
+      FOUC guard: applies .dark before first paint.
+      Default is dark unless localStorage says 'light' or
+      the system explicitly prefers light with no stored preference.
     -->
     <script is:inline>
       (function () {
@@ -36,7 +54,7 @@ const { title, description = 'Cybersecurity engineer portfolio.' } = Astro.props
           var stored = localStorage.getItem('theme');
           var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
           if (stored === 'light' || (stored === null && prefersLight)) {
-            // stay light — no class needed
+            // stay light
           } else {
             document.documentElement.classList.add('dark');
           }
@@ -44,16 +62,15 @@ const { title, description = 'Cybersecurity engineer portfolio.' } = Astro.props
       })();
     </script>
 
-    <!--
-      Fallback background before the CSS bundle loads.
-      Prevents white flash on dark-mode first load.
-    -->
+    <!-- Prevents white flash before CSS bundle loads -->
     <style>
       html { background-color: #0f0f0f; }
       html:not(.dark) { background-color: #f5f3f0; }
     </style>
   </head>
-  <body class="font-sans antialiased min-h-screen">
+  <body class="font-sans antialiased flex flex-col min-h-screen">
+    <Header />
     <slot />
+    <Footer />
   </body>
 </html>

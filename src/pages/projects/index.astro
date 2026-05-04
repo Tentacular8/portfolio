@@ -1,0 +1,49 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { projects } from '../../data/projects';
+---
+
+<Layout
+  title="Projects — [YOUR NAME]"
+  description="Projects by [YOUR NAME], network and cybersecurity engineer."
+>
+  <main class="mx-auto max-w-3xl flex-1 px-6 py-14">
+
+    <p class="font-mono text-sm mb-6">
+      <span class="text-accent" aria-hidden="true">{'>'}</span>
+      <span class="ml-2 text-muted">all projects</span>
+    </p>
+    <h1 class="text-3xl font-semibold tracking-tight mb-12">Projects</h1>
+
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4" role="list">
+      {projects.map((p) => (
+        <li>
+          <a
+            href={`/projects/${p.slug}`}
+            class="group block h-full rounded-md border border-subtle p-5 hover:border-accent focus-ring"
+          >
+            {p.featured && (
+              <span class="font-mono text-xs text-accent mb-3 block">featured</span>
+            )}
+            <h2 class="text-base font-semibold tracking-tight group-hover:text-accent">
+              {p.title}
+            </h2>
+            <p class="mt-1.5 text-sm text-secondary leading-relaxed line-clamp-2">
+              {p.summary}
+            </p>
+            <ul class="mt-4 flex flex-wrap gap-1.5" role="list">
+              {p.techStack.slice(0, 3).map((t) => (
+                <li>
+                  <span class="font-mono text-xs text-muted border border-subtle rounded px-1.5 py-0.5">
+                    {t}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+  </main>
+</Layout>

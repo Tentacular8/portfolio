@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const skills: { category: string; items: string[] }[] = [
+  {
+    category: 'Networking',
+    items: ['TCP/IP', 'BGP / OSPF', 'VLANs & trunking', 'Firewalls & ACLs', 'VPNs', 'Packet analysis', 'Network segmentation'],
+  },
+  {
+    category: 'Security',
+    items: ['Penetration testing', 'Threat modeling', 'Vulnerability assessment', 'SIEM & log analysis', 'Incident response', 'OSINT', 'Social engineering awareness'],
+  },
+  {
+    category: 'Programming',
+    items: ['Python', 'Go', 'Bash / shell scripting', 'Rust', 'TypeScript', 'SQL'],
+  },
+  {
+    category: 'Tools & Platforms',
+    items: ['Wireshark', 'Nmap / Nessus', 'Burp Suite', 'Metasploit', 'Splunk', 'Docker', 'Git', 'Linux (Debian / Arch)'],
+  },
+];
+---
+
+<Layout
+  title="About — [YOUR NAME]"
+  description="[YOUR NAME] is a network and cybersecurity engineer. Learn more about their background and skills."
+>
+  <main class="mx-auto max-w-3xl px-6 py-14">
+
+    <!-- Bio -->
+    <section aria-label="Introduction">
+      <p class="font-mono text-sm mb-6">
+        <span class="text-accent" aria-hidden="true">{'>'}</span>
+        <span class="ml-2 text-muted">about</span>
+      </p>
+
+      <h1 class="text-3xl font-semibold tracking-tight">[YOUR NAME]</h1>
+      <p class="mt-1 text-lg text-secondary">[YOUR HEADLINE]</p>
+
+      <div class="mt-8 space-y-4 max-w-prose">
+        <p class="text-secondary leading-relaxed">
+          [YOUR BIO — paragraph one. Introduce yourself: where you work or study, what you focus on,
+          and the type of problems you care about. Keep it direct and specific.]
+        </p>
+        <p class="text-secondary leading-relaxed">
+          [YOUR BIO — paragraph two. Go deeper: your technical background, how you got into
+          security/networking, what drives you professionally. Avoid generic filler.]
+        </p>
+        <p class="text-secondary leading-relaxed">
+          [YOUR BIO — paragraph three (optional). Anything else worth knowing: certifications in
+          progress, side interests that inform your work, what you are currently learning or building.]
+        </p>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section aria-label="Skills" class="mt-20">
+      <p class="font-mono text-sm mb-8">
+        <span class="text-accent" aria-hidden="true">{'>'}</span>
+        <span class="ml-2 text-muted">skills</span>
+      </p>
+
+      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+        {skills.map(({ category, items }) => (
+          <div>
+            <dt class="font-mono text-xs text-muted uppercase tracking-widest mb-4">{category}</dt>
+            <dd>
+              <ul class="space-y-2">
+                {items.map(item => (
+                  <li class="text-sm text-secondary">{item}</li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+  </main>
+</Layout>

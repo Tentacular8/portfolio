@@ -1,37 +1,92 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
+import { projects } from '../data/projects';
+
+const featured = projects.find((p) => p.featured);
+const rest = projects.filter((p) => !p.featured);
 ---
 
-<Layout title="Portfolio">
-  <Header />
+<Layout
+  title="[YOUR NAME] — Portfolio"
+  description="Portfolio of [YOUR NAME], network and cybersecurity engineer."
+>
+  <main class="mx-auto max-w-3xl flex-1 px-6">
 
-  <main class="mx-auto max-w-3xl px-6 py-20">
     <!-- Hero -->
-    <section aria-label="Introduction">
-      <h1 class="text-4xl font-semibold tracking-tight">Your Name</h1>
-      <p class="mt-4 max-w-xl text-lg leading-relaxed text-secondary">
-        Cybersecurity engineer. I build secure systems and break insecure ones.
+    <section aria-label="Introduction" class="pt-14 pb-12 border-b border-subtle">
+      <h1 class="text-4xl font-semibold tracking-tight">[YOUR NAME]</h1>
+      <p class="mt-2 text-xl text-secondary">[YOUR HEADLINE — e.g. Network &amp; cybersecurity engineer.]</p>
+      <p class="mt-5 max-w-xl text-base text-secondary leading-relaxed">
+        [YOUR BIO — 2–3 sentences. What you do, what you care about, and what you are currently
+        working on. Be specific; avoid generic filler.]
       </p>
     </section>
 
-    <!-- Projects -->
-    <section aria-label="Projects" class="mt-24">
-      <p class="mb-8 font-mono text-sm">
-        <span class="text-accent" aria-hidden="true">{'>'}</span>
-        <span class="ml-2 text-muted">projects</span>
-      </p>
-      <div class="rounded-md border border-subtle bg-surface p-6">
-        <p class="font-mono text-sm text-muted">// content coming soon</p>
-      </div>
-    </section>
+    <!-- Featured project -->
+    {featured && (
+      <section aria-label="Featured project" class="pt-12">
+        <p class="font-mono text-sm mb-6">
+          <span class="text-accent" aria-hidden="true">{'>'}</span>
+          <span class="ml-2 text-muted">featured</span>
+        </p>
+
+        <a href={`/projects/${featured.slug}`} class="group block focus-ring rounded-md">
+          <article class="rounded-md border border-subtle bg-surface p-8">
+            <h2 class="text-2xl font-semibold tracking-tight group-hover:text-accent">
+              {featured.title}
+            </h2>
+            <p class="mt-3 text-secondary leading-relaxed">{featured.summary}</p>
+            <ul class="mt-5 flex flex-wrap gap-2" role="list">
+              {featured.techStack.map((t) => (
+                <li>
+                  <span class="font-mono text-xs text-muted border border-subtle rounded px-2 py-0.5">
+                    {t}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-6 text-sm text-accent">View case study →</p>
+          </article>
+        </a>
+      </section>
+    )}
+
+    <!-- Project grid -->
+    {rest.length > 0 && (
+      <section aria-label="All projects" class="mt-16 pb-20">
+        <p class="font-mono text-sm mb-6">
+          <span class="text-accent" aria-hidden="true">{'>'}</span>
+          <span class="ml-2 text-muted">projects</span>
+        </p>
+
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4" role="list">
+          {rest.map((p) => (
+            <li>
+              <a
+                href={`/projects/${p.slug}`}
+                class="group block h-full rounded-md border border-subtle p-5 hover:border-accent focus-ring"
+              >
+                <h3 class="text-base font-semibold tracking-tight group-hover:text-accent">
+                  {p.title}
+                </h3>
+                <p class="mt-1.5 text-sm text-secondary leading-relaxed line-clamp-2">
+                  {p.summary}
+                </p>
+                <ul class="mt-4 flex flex-wrap gap-1.5" role="list">
+                  {p.techStack.slice(0, 3).map((t) => (
+                    <li>
+                      <span class="font-mono text-xs text-muted border border-subtle rounded px-1.5 py-0.5">
+                        {t}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
   </main>
-
-  <footer class="mt-24 border-t border-subtle">
-    <div class="mx-auto max-w-3xl px-6 py-6">
-      <p class="font-mono text-xs text-muted">
-        built · {new Date().toISOString().split('T')[0]}
-      </p>
-    </div>
-  </footer>
 </Layout>
