@@ -9,27 +9,37 @@
   --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
 }
 
-/* ── Light mode (default) ─────────────────────────────────────── */
+/* ── Light mode (default) ────────────────────────────────────────
+   All contrast ratios are against --site-bg (#f5f3f0).
+   ──────────────────────────────────────────────────────────────── */
 :root {
-  --site-bg: #f5f3f0;
+  --site-bg:      #f5f3f0;
   --site-surface: #ffffff;
-  --site-border: #e2dfdc;
-  --site-fg: #1c1917;
-  --site-muted: #78716c;
-  --site-accent: #b91c1c; /* red-700 — passes 4.5:1 on warm-white bg */
+  --site-border:  #e2dfdc;
+
+  --site-fg:   #171717;  /* primary text   — ~16.4:1 AAA */
+  --site-fg-2: #4a4542;  /* secondary text — ~8.6:1  AA+ */
+  --site-fg-3: #6b6460;  /* tertiary text  — ~5.3:1  AA  */
+
+  --site-accent: #b83b0b; /* burnt orange — ~5.15:1 AA */
 }
 
-/* ── Dark mode ───────────────────────────────────────────────── */
+/* ── Dark mode ───────────────────────────────────────────────────
+   All contrast ratios are against --site-bg (#0f0f0f).
+   ──────────────────────────────────────────────────────────────── */
 .dark {
-  --site-bg: #0f0f0f;
+  --site-bg:      #0f0f0f;
   --site-surface: #1a1a1a;
-  --site-border: #2a2a2a;
-  --site-fg: #e8e6e3;
-  --site-muted: #8a8782;
-  --site-accent: #ef4444; /* red-500 — passes 4.5:1 on #0f0f0f */
+  --site-border:  #2a2a2a;
+
+  --site-fg:   #e8e6e3;  /* primary text   — ~15.4:1 AAA */
+  --site-fg-2: #b5b2ae;  /* secondary text — ~9.1:1  AA+ */
+  --site-fg-3: #8a8782;  /* tertiary text  — ~5.4:1  AA  */
+
+  --site-accent: #ef4444; /* red-500 — ~5.1:1 AA */
 }
 
-/* ── Base ───────────────────────────────────────────────────── */
+/* ── Base ────────────────────────────────────────────────────── */
 @layer base {
   html {
     background-color: var(--site-bg);
@@ -42,7 +52,6 @@
     color: var(--site-accent);
   }
 
-  /* Enable ligatures for all monospace elements */
   code,
   pre,
   kbd,
@@ -51,13 +60,29 @@
   }
 }
 
-/* ── Semantic utilities ─────────────────────────────────────── */
+/* ── Semantic utilities ──────────────────────────────────────────
+   All mode-switching is handled by the CSS variables above.
+   Never write dark:text-red-500 text-orange-700 in components —
+   use these semantic classes instead.
+   ──────────────────────────────────────────────────────────────── */
 @layer utilities {
-  .bg-base { background-color: var(--site-bg); }
+  /* Backgrounds */
+  .bg-base    { background-color: var(--site-bg); }
   .bg-surface { background-color: var(--site-surface); }
-  .text-muted { color: var(--site-muted); }
-  .text-accent { color: var(--site-accent); }
+
+  /* Text hierarchy */
+  .text-secondary { color: var(--site-fg-2); }
+  .text-muted     { color: var(--site-fg-3); }
+  .text-accent    { color: var(--site-accent); }
+
+  /* Borders */
   .border-subtle { border-color: var(--site-border); }
+  .border-accent { border-color: var(--site-accent); }
   .divide-subtle > * + * { border-color: var(--site-border); }
-  .ring-accent { --tw-ring-color: var(--site-accent); }
+
+  /* Focus ring — apply via focus-ring class */
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--site-accent);
+    outline-offset: 2px;
+  }
 }

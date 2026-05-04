@@ -41,20 +41,33 @@ Deploys to GitHub Pages at `https://USERNAME.github.io/portfolio`.
 Dark-first. Class-based switching via `.dark` on `<html>`. FOUC prevented by an inline script in `<head>`. Toggle persists to `localStorage`. Default: dark unless system explicitly prefers light.
 
 ### Colors
-All colors are CSS custom properties on `:root` (light) and `.dark` (dark), consumed via semantic utilities defined in `global.css`.
+
+**Backgrounds and surfaces** — same variable names, different values per mode:
 
 | Token | Light | Dark | Usage |
 |---|---|---|---|
 | `--site-bg` | `#f5f3f0` | `#0f0f0f` | Page background |
 | `--site-surface` | `#ffffff` | `#1a1a1a` | Cards, panels |
 | `--site-border` | `#e2dfdc` | `#2a2a2a` | Borders, dividers |
-| `--site-fg` | `#1c1917` | `#e8e6e3` | Body text |
-| `--site-muted` | `#78716c` | `#8a8782` | Secondary text, labels |
-| `--site-accent` | `#b91c1c` | `#ef4444` | Links, CTAs, focus rings, `>` prompts |
 
-**Accent usage rule:** Red accent appears on links, the active nav state, focus rings, terminal-prompt `>` characters, and key CTAs only. Never as a background fill, never in body text or headings. Target ≤10% of any visible page area.
+**Text hierarchy** — three levels, both modes pass WCAG AA minimum; primary passes AAA:
 
-Both accent values pass WCAG AA (4.5:1) against their respective backgrounds.
+| Token | Light | Light contrast | Dark | Dark contrast | Usage |
+|---|---|---|---|---|---|
+| `--site-fg` | `#171717` | ~16.4:1 AAA | `#e8e6e3` | ~15.4:1 AAA | Primary body text |
+| `--site-fg-2` | `#4a4542` | ~8.6:1 AA+ | `#b5b2ae` | ~9.1:1 AA+ | Secondary: captions, metadata |
+| `--site-fg-3` | `#6b6460` | ~5.3:1 AA | `#8a8782` | ~5.4:1 AA | Tertiary: timestamps, labels |
+
+All ratios measured against each mode's `--site-bg`.
+
+**Accent** — mode-specific colors, visually related (warm family). Never used as background fills, in body text, or headings:
+
+| Token | Value | Contrast | Usage |
+|---|---|---|---|
+| `--site-accent` (light) | `#b83b0b` (burnt orange) | ~5.15:1 AA on `#f5f3f0` | Links, CTAs, focus rings, `>` prompts |
+| `--site-accent` (dark) | `#ef4444` (red-500) | ~5.1:1 AA on `#0f0f0f` | Same |
+
+Target ≤10% of any visible page area for accent color.
 
 ### Typography
 - **Body / UI**: IBM Plex Sans — weights 400, 500, 600. Self-hosted via `@fontsource/ibm-plex-sans`.
@@ -68,11 +81,14 @@ Both accent values pass WCAG AA (4.5:1) against their respective backgrounds.
 - Borders: `border-subtle` (uses `--site-border`).
 
 ### Semantic utility classes
-Defined in `src/styles/global.css` under `@layer utilities`:
+All defined in `src/styles/global.css` under `@layer utilities`. Mode-switching is handled by the CSS variables — never write `dark:text-red-500 text-orange-700` in components.
+
 - `bg-base`, `bg-surface` — background fills
-- `text-muted`, `text-accent` — text colors
+- `text-secondary` — secondary text (`--site-fg-2`)
+- `text-muted` — tertiary text (`--site-fg-3`)
+- `text-accent`, `border-accent` — accent color (mode-aware)
 - `border-subtle` — border color
-- `ring-accent` — focus ring color
+- `focus-ring` — focus-visible outline in accent color
 
 ### Technical details
 - Section labels: `> label` pattern — `>` in `text-accent`, label in `font-mono text-sm text-muted`.
