@@ -17,8 +17,10 @@ const {
   description = 'Portfolio of [YOUR NAME], network and cybersecurity engineer.',
 } = Astro.props;
 
-const siteUrl = '[YOUR SITE URL]'; // e.g. https://username.github.io/portfolio
-const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
+const siteUrl = '[YOUR SITE URL]'; // e.g. https://username.github.io/portfolio — replace before deploying
+const canonicalURL = siteUrl.startsWith('http')
+  ? new URL(Astro.url.pathname, siteUrl).href
+  : null;
 ---
 
 <!doctype html>
@@ -31,12 +33,12 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
 
     <!-- OpenGraph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
+    {canonicalURL && <meta property="og:url" content={canonicalURL} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
 
-    <!-- Canonical -->
-    <link rel="canonical" href={canonicalURL} />
+    <!-- Canonical — omitted until [YOUR SITE URL] is set -->
+    {canonicalURL && <link rel="canonical" href={canonicalURL} />}
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
