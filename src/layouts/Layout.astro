@@ -1,0 +1,59 @@
+---
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Cybersecurity engineer portfolio.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <!--
+      FOUC guard: runs synchronously before first paint.
+      Applies .dark to <html> unless localStorage says 'light'
+      or the system explicitly prefers light with no stored preference.
+      Default is dark.
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+          if (stored === 'light' || (stored === null && prefersLight)) {
+            // stay light — no class needed
+          } else {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <!--
+      Fallback background before the CSS bundle loads.
+      Prevents white flash on dark-mode first load.
+    -->
+    <style>
+      html { background-color: #0f0f0f; }
+      html:not(.dark) { background-color: #f5f3f0; }
+    </style>
+  </head>
+  <body class="font-sans antialiased min-h-screen">
+    <slot />
+  </body>
+</html>

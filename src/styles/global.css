@@ -1,1 +1,63 @@
 @import "tailwindcss";
+
+/* Class-based dark mode — overrides the default media-query strategy */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Font stacks */
+@theme {
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+}
+
+/* ── Light mode (default) ─────────────────────────────────────── */
+:root {
+  --site-bg: #f5f3f0;
+  --site-surface: #ffffff;
+  --site-border: #e2dfdc;
+  --site-fg: #1c1917;
+  --site-muted: #78716c;
+  --site-accent: #b91c1c; /* red-700 — passes 4.5:1 on warm-white bg */
+}
+
+/* ── Dark mode ───────────────────────────────────────────────── */
+.dark {
+  --site-bg: #0f0f0f;
+  --site-surface: #1a1a1a;
+  --site-border: #2a2a2a;
+  --site-fg: #e8e6e3;
+  --site-muted: #8a8782;
+  --site-accent: #ef4444; /* red-500 — passes 4.5:1 on #0f0f0f */
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
+@layer base {
+  html {
+    background-color: var(--site-bg);
+    color: var(--site-fg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: var(--site-accent);
+  }
+
+  /* Enable ligatures for all monospace elements */
+  code,
+  pre,
+  kbd,
+  samp {
+    font-feature-settings: "liga" 1, "calt" 1;
+  }
+}
+
+/* ── Semantic utilities ─────────────────────────────────────── */
+@layer utilities {
+  .bg-base { background-color: var(--site-bg); }
+  .bg-surface { background-color: var(--site-surface); }
+  .text-muted { color: var(--site-muted); }
+  .text-accent { color: var(--site-accent); }
+  .border-subtle { border-color: var(--site-border); }
+  .divide-subtle > * + * { border-color: var(--site-border); }
+  .ring-accent { --tw-ring-color: var(--site-accent); }
+}
