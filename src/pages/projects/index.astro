@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import { getPublishedProjects } from '../../utils/projects';
 
 const projects = await getPublishedProjects();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout
@@ -21,7 +22,7 @@ const projects = await getPublishedProjects();
       {projects.map((p) => (
         <li>
           <a
-            href={`/projects/${p.data.slug}`}
+            href={`${base}/projects/${p.data.slug}`}
             class="group block h-full rounded-md border border-subtle p-5 hover:border-accent focus-ring"
           >
             {p.data.featured && (

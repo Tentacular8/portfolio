@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../"; /* Explicitly scan src/ so Tailwind finds .astro classes in production builds */
 
 /* Class-based dark mode — overrides the default media-query strategy */
 @custom-variant dark (&:where(.dark, .dark *));

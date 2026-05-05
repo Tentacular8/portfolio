@@ -96,4 +96,24 @@ All defined in `src/styles/global.css` under `@layer utilities`. Mode-switching 
 
 ## Deployment
 
-GitHub Pages via GitHub Actions on push to `main`. Details to be added in Phase 3.
+- **Live URL:** `https://Tentacular8.github.io/portfolio`
+- **Platform:** GitHub Pages via GitHub Actions
+- **Trigger:** Push to `master` (or manual `workflow_dispatch` in GitHub UI)
+- **Workflow:** `.github/workflows/deploy.yml` — uses `withastro/action@v3` to build, then `actions/deploy-pages@v4` to publish
+- **Pages source setting:** Repo Settings → Pages → Source → **GitHub Actions** (not "Deploy from a branch")
+
+### Dev vs production URLs
+`base: '/portfolio'` is set in `astro.config.mjs`. Both environments serve at the same path:
+- Dev: `http://localhost:4321/portfolio/`
+- Production: `https://Tentacular8.github.io/portfolio/`
+
+### Base path convention
+All internal `href` and asset `src` values use `import.meta.env.BASE_URL.replace(/\/$/, '')` (strips trailing slash), then add an explicit `/`:
+```ts
+const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // '/portfolio' or ''
+// href={`${base}/about`}  →  /portfolio/about
+```
+Never use bare absolute paths like `href="/about"` — they will 404 in production.
+
+### Hero images
+Store in `public/images/` and set `heroImage: "/images/filename.png"` in frontmatter (leading slash). The `[slug].astro` template prepends `base` automatically.

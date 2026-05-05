@@ -3,7 +3,7 @@ import '@fontsource/ibm-plex-sans/400.css';
 import '@fontsource/ibm-plex-sans/500.css';
 import '@fontsource/ibm-plex-sans/600.css';
 import '@fontsource/jetbrains-mono/400.css';
-import '../styles/global.css';
+import globalStyles from '../styles/global.css?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
@@ -17,9 +17,9 @@ const {
   description = 'Portfolio of [YOUR NAME], network and cybersecurity engineer.',
 } = Astro.props;
 
-const siteUrl = '[YOUR SITE URL]'; // e.g. https://username.github.io/portfolio — replace before deploying
-const canonicalURL = siteUrl.startsWith('http')
-  ? new URL(Astro.url.pathname, siteUrl).href
+const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // '/portfolio' or ''
+const canonicalURL = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
   : null;
 ---
 
@@ -37,38 +37,30 @@ const canonicalURL = siteUrl.startsWith('http')
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
 
-    <!-- Canonical — omitted until [YOUR SITE URL] is set -->
     {canonicalURL && <link rel="canonical" href={canonicalURL} />}
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href={globalStyles} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="icon" href={`${base}/favicon.ico`} />
 
     <title>{title}</title>
 
-    <!--
-      FOUC guard: applies .dark before first paint.
-      Default is dark unless localStorage says 'light' or
-      the system explicitly prefers light with no stored preference.
-    -->
+    <!-- FOUC guard: sets .dark class and background before first paint -->
     <script is:inline>
       (function () {
         try {
           var stored = localStorage.getItem('theme');
           var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-          if (stored === 'light' || (stored === null && prefersLight)) {
-            // stay light
-          } else {
+          var isDark = !(stored === 'light' || (stored === null && prefersLight));
+          if (isDark) {
             document.documentElement.classList.add('dark');
+            document.documentElement.style.backgroundColor = '#0f0f0f';
+          } else {
+            document.documentElement.style.backgroundColor = '#f5f3f0';
           }
         } catch (e) {}
       })();
     </script>
-
-    <!-- Prevents white flash before CSS bundle loads -->
-    <style>
-      html { background-color: #0f0f0f; }
-      html:not(.dark) { background-color: #f5f3f0; }
-    </style>
   </head>
   <body class="font-sans antialiased flex flex-col min-h-screen">
     <Header />

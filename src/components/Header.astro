@@ -1,11 +1,12 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // '/portfolio' or ''
 const { pathname } = Astro.url;
 
 function isActive(path: string): boolean {
-  if (path === '/') return pathname === '/';
-  return pathname.startsWith(path);
+  if (path === '/') return pathname === `${base}/` || pathname === base;
+  return pathname.startsWith(`${base}${path}`);
 }
 ---
 
@@ -13,26 +14,26 @@ function isActive(path: string): boolean {
   <div class="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
 
     <!-- Logo -->
-    <a href="/" class="font-mono text-sm font-medium text-accent focus-ring rounded" aria-label="Home">
+    <a href={`${base}/`} class="font-mono text-sm font-medium text-accent focus-ring rounded" aria-label="Home">
       ~/portfolio
     </a>
 
     <!-- Desktop nav -->
     <nav aria-label="Site navigation" class="hidden md:flex items-center gap-6">
       <a
-        href="/"
+        href={`${base}/`}
         class:list={['text-sm focus-ring rounded', isActive('/') ? 'text-accent font-medium' : 'text-secondary hover:text-accent']}
       >home</a>
       <a
-        href="/projects"
+        href={`${base}/projects`}
         class:list={['text-sm focus-ring rounded', isActive('/projects') ? 'text-accent font-medium' : 'text-secondary hover:text-accent']}
       >projects</a>
       <a
-        href="/about"
+        href={`${base}/about`}
         class:list={['text-sm focus-ring rounded', isActive('/about') ? 'text-accent font-medium' : 'text-secondary hover:text-accent']}
       >about</a>
       <a
-        href="/contact"
+        href={`${base}/contact`}
         class:list={['text-sm focus-ring rounded', isActive('/contact') ? 'text-accent font-medium' : 'text-secondary hover:text-accent']}
       >contact</a>
       <ThemeToggle />
@@ -66,10 +67,10 @@ function isActive(path: string): boolean {
     class="hidden border-t border-subtle md:hidden"
   >
     <div class="mx-auto flex max-w-3xl flex-col gap-1 px-6 py-4">
-      <a href="/" class:list={['rounded px-2 py-2 text-sm focus-ring', isActive('/') ? 'text-accent font-medium' : 'text-secondary']}>home</a>
-      <a href="/projects" class:list={['rounded px-2 py-2 text-sm focus-ring', isActive('/projects') ? 'text-accent font-medium' : 'text-secondary']}>projects</a>
-      <a href="/about" class:list={['rounded px-2 py-2 text-sm focus-ring', isActive('/about') ? 'text-accent font-medium' : 'text-secondary']}>about</a>
-      <a href="/contact" class:list={['rounded px-2 py-2 text-sm focus-ring', isActive('/contact') ? 'text-accent font-medium' : 'text-secondary']}>contact</a>
+      <a href={`${base}/`} class:list={['rounded px-2 py-2 text-sm focus-ring', isActive('/') ? 'text-accent font-medium' : 'text-secondary']}>home</a>
+      <a href={`${base}/projects`} class:list={['rounded px-2 py-2 text-sm focus-ring', isActive('/projects') ? 'text-accent font-medium' : 'text-secondary']}>projects</a>
+      <a href={`${base}/about`} class:list={['rounded px-2 py-2 text-sm focus-ring', isActive('/about') ? 'text-accent font-medium' : 'text-secondary']}>about</a>
+      <a href={`${base}/contact`} class:list={['rounded px-2 py-2 text-sm focus-ring', isActive('/contact') ? 'text-accent font-medium' : 'text-secondary']}>contact</a>
     </div>
   </nav>
 </header>

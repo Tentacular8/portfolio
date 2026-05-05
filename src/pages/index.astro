@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { getPublishedProjects } from '../utils/projects';
 
 const projects = await getPublishedProjects();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const featured = projects.find((p) => p.data.featured);
 const rest = projects.filter((p) => !p.data.featured);
 ---
@@ -30,7 +31,7 @@ const rest = projects.filter((p) => !p.data.featured);
           <span class="text-accent" aria-hidden="true">{'>'}</span>
           <span class="ml-2 text-muted">featured</span>
         </p>
-        <a href={`/projects/${featured.data.slug}`} class="group block focus-ring rounded-md">
+        <a href={`${base}/projects/${featured.data.slug}`} class="group block focus-ring rounded-md">
           <article class="rounded-md border border-subtle bg-surface p-8">
             <h2 class="text-2xl font-semibold tracking-tight group-hover:text-accent">
               {featured.data.title}
@@ -62,7 +63,7 @@ const rest = projects.filter((p) => !p.data.featured);
           {rest.map((p) => (
             <li>
               <a
-                href={`/projects/${p.data.slug}`}
+                href={`${base}/projects/${p.data.slug}`}
                 class="group block h-full rounded-md border border-subtle p-5 hover:border-accent focus-ring"
               >
                 <h3 class="text-base font-semibold tracking-tight group-hover:text-accent">
