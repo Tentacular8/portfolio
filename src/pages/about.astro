@@ -4,26 +4,37 @@ import Layout from '../layouts/Layout.astro';
 const skills: { category: string; items: string[] }[] = [
   {
     category: 'Networking',
-    items: ['TCP/IP', 'BGP / OSPF', 'VLANs & trunking', 'Firewalls & ACLs', 'VPNs', 'Packet analysis', 'Network segmentation'],
+    items: [
+      'Computer Networking',
+      'Cisco Routing & Switching',
+      'Network Architecture & Design',
+      'Network Device Configuration',
+      'Equipment Swap & Deployment',
+      'TCP/UDP · SSH · DNS · DHCP · MFA',
+    ],
   },
   {
-    category: 'Security',
-    items: ['Penetration testing', 'Threat modeling', 'Vulnerability assessment', 'SIEM & log analysis', 'Incident response', 'OSINT', 'Social engineering awareness'],
+    category: 'Security & Compliance',
+    items: [
+      'Palo Alto Firewall',
+      'Security Policy Design',
+      'NERC-CIP Compliance (CIP-002, CIP-007, CIP-010)',
+    ],
   },
   {
-    category: 'Programming',
-    items: ['Python', 'Go', 'Bash / shell scripting', 'Rust', 'TypeScript', 'SQL'],
+    category: 'Industrial / OT',
+    items: ['IT/OT Network Segmentation', 'SCADA Network Communication'],
   },
   {
-    category: 'Tools & Platforms',
-    items: ['Wireshark', 'Nmap / Nessus', 'Burp Suite', 'Metasploit', 'Splunk', 'Docker', 'Git', 'Linux (Debian / Arch)'],
+    category: 'Tools & Programming',
+    items: ['Microsoft Office 365', 'Python'],
   },
 ];
 ---
 
 <Layout
-  title="About — [YOUR NAME]"
-  description="[YOUR NAME] is a network and cybersecurity engineer. Learn more about their background and skills."
+  title="About — Jason Pitt"
+  description="Jason Pitt is a network cybersecurity analyst working remotely across the US. Learn more about his background and skills."
 >
   <main class="mx-auto max-w-3xl px-6 py-14">
 
@@ -34,21 +45,17 @@ const skills: { category: string; items: string[] }[] = [
         <span class="ml-2 text-muted">about</span>
       </p>
 
-      <h1 class="text-3xl font-semibold tracking-tight">[YOUR NAME]</h1>
-      <p class="mt-1 text-lg text-secondary">[YOUR HEADLINE]</p>
+      <h1 class="text-3xl font-semibold tracking-tight">Jason Pitt</h1>
+      <p class="mt-1 text-lg text-secondary">Network Cybersecurity Analyst &mdash; Remote, US</p>
 
       <div class="mt-8 space-y-4 max-w-prose">
         <p class="text-secondary leading-relaxed">
-          [YOUR BIO — paragraph one. Introduce yourself: where you work or study, what you focus on,
-          and the type of problems you care about. Keep it direct and specific.]
+          I work on IT networking &amp; security &mdash; switching, routing, firewall analytics,
+          baseload monitoring, and network build-out are my day-to-day work.
         </p>
         <p class="text-secondary leading-relaxed">
-          [YOUR BIO — paragraph two. Go deeper: your technical background, how you got into
-          security/networking, what drives you professionally. Avoid generic filler.]
-        </p>
-        <p class="text-secondary leading-relaxed">
-          [YOUR BIO — paragraph three (optional). Anything else worth knowing: certifications in
-          progress, side interests that inform your work, what you are currently learning or building.]
+          What I care about most is a clean and efficient environment that helps everyone
+          communicate safely and reliably.
         </p>
       </div>
     </section>

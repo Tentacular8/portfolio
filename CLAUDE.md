@@ -3,7 +3,7 @@
 ## Project overview
 
 An Astro + TypeScript + Tailwind portfolio site for showcasing coding projects.
-Deploys to GitHub Pages at `https://USERNAME.github.io/portfolio`.
+Deploys to GitHub Pages at `https://Tentacular8.github.io/portfolio`.
 
 ## Tech stack and constraints
 
